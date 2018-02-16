@@ -1,0 +1,81 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="Armada_Wall1">
+    <static>true</static>
+    <link name="Wall1">
+      <pose>0 0 0 0 0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>10 0.2 8</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <cast_shadows>false</cast_shadows>
+        <geometry>
+          <box>
+            <size>10 0.2 8</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://Armada_Wall2/materials/scripts</uri>
+            <uri>model://Armada_Wall2/materials/textures</uri>
+            <name>vrc/grey_wall</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name="Wall2">
+      <pose>5 2.5 0 0 0 1.5707</pose>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>5 0.2 8</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <cast_shadows>false</cast_shadows>
+        <geometry>
+          <box>
+            <size>5 0.2 8</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://Armada_Wall2/materials/scripts</uri>
+            <uri>model://Armada_Wall2/materials/textures</uri>
+            <name>vrc/grey_wall</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name="Wall3">
+      <pose>-5 2.5 0 0 0 -1.5707</pose>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>5 0.2 8</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <cast_shadows>false</cast_shadows>
+        <geometry>
+          <box>
+            <size>5 0.2 8</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://Armada_Wall2/materials/scripts</uri>
+            <uri>model://Armada_Wall2/materials/textures</uri>
+            <name>vrc/grey_wall</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

@@ -1,0 +1,36 @@
+[submodule "Dev_code_version_SITL/ros_catkin_ws/src/hector_gazebo"]
+	path = Dev_code_version_SITL/ros_catkin_ws/src/hector_gazebo
+	url = https://github.com/tu-darmstadt-ros-pkg/hector_gazebo/
+[submodule "Dev_code_version_SITL/ros_catkin_ws/src/rotors_simulator"]
+	path = Dev_code_version_SITL/ros_catkin_ws/src/rotors_simulator
+	url = https://github.com/erlerobot/rotors_simulator
+	branch = sonar_plugin
+[submodule "Dev_code_version_SITL/ros_catkin_ws/src/mav_comm"]
+	path = Dev_code_version_SITL/ros_catkin_ws/src/mav_comm
+	url = https://github.com/PX4/mav_comm.git
+[submodule "Dev_code_version_SITL/ros_catkin_ws/src/glog_catkin"]
+	path = Dev_code_version_SITL/ros_catkin_ws/src/glog_catkin
+	url = https://github.com/ethz-asl/glog_catkin.git
+[submodule "Dev_code_version_SITL/ros_catkin_ws/src/catkin_simple"]
+	path = Dev_code_version_SITL/ros_catkin_ws/src/catkin_simple
+	url = https://github.com/catkin/catkin_simple.git
+[submodule "Dev_code_version_SITL/ros_catkin_ws/src/mavros"]
+	path = Dev_code_version_SITL/ros_catkin_ws/src/mavros
+	url = https://github.com/erlerobot/mavros.git
+[submodule "Dev_code_version_SITL/ros_catkin_ws/src/gazebo_ros_pkgs"]
+	path = Dev_code_version_SITL/ros_catkin_ws/src/gazebo_ros_pkgs
+	url = https://github.com/ros-simulation/gazebo_ros_pkgs.git
+	branch = indigo-devel
+[submodule "Dev_code_version_SITL/ros_catkin_ws/src/gazebo_cpp_examples"]
+	path = Dev_code_version_SITL/ros_catkin_ws/src/gazebo_cpp_examples
+	url = https://github.com/erlerobot/gazebo_cpp_examples
+[submodule "Dev_code_version_SITL/ros_catkin_ws/src/gazebo_python_examples"]
+	path = Dev_code_version_SITL/ros_catkin_ws/src/gazebo_python_examples
+	url = https://github.com/erlerobot/gazebo_python_examples
+[submodule "Dev_code_version_SITL/ros_catkin_ws/src/ROS_quadrotor_simulator"]
+	path = Dev_code_version_SITL/ros_catkin_ws/src/ROS_quadrotor_simulator
+	url = https://github.com/wilselby/ROS_quadrotor_simulator
+[submodule "Dev_code_version_SITL/ardupilot"]
+	path = Dev_code_version_SITL/ardupilot
+	url = https://github.com/erlerobot/ardupilot
+	branch = gazebo
