@@ -34,3 +34,6 @@
 	path = Dev_code_version_SITL/ardupilot
 	url = https://github.com/erlerobot/ardupilot
 	branch = gazebo
+[submodule "erle_gazebo_models"]
+	path = erle_gazebo_models
+	url = https://github.com/erlerobot/erle_gazebo_models

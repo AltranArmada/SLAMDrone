@@ -1,0 +1,15 @@
+Gazebo multi-robot simulator, version 7.9.0
+Copyright (C) 2012 Open Source Robotics Foundation.
+Released under the Apache 2 License.
+http://gazebosim.org
+
+
+(1519144199 902988070) [Msg] Waiting for master.
+(1519144199 903285968) Failed to create connection to remote host[localhost:11345]
+(1519144200 913679344) [Msg] Connected to gazebo master @ http://127.0.0.1:11345
+(1519144200 913856881) [Msg] Publicized address: 172.17.0.2
+(1519144200 930132603) Loaded .ini file from: "/home/user/.gazebo/gui.ini"
+(1519144201 614655583) Invalid filename or directory["/home/user//.gazebo/models/README.md"] in GAZEBO_MODEL_PATH. It's not a good idea to put extra files in a GAZEBO_MODEL_PATH because the file structure may be modified by Gazebo.
+(1519144201 633104539) [Err] [InsertModelWidget.cc:302] Missing model.config for model "/home/user/Dev_code_version_SITL/ros_catkin_ws/src/ardupilot_sitl_gazebo_plugin/ardupilot_sitl_gazebo_plugin/meshes/meshes_sensors/kinect"
+(1519144201 633363052) model.config file is missing in directory["/home/user/Dev_code_version_SITL/ros_catkin_ws/src/ardupilot_sitl_gazebo_plugin/ardupilot_sitl_gazebo_plugin/meshes/meshes_sensors/kinect"]
+(1519144203 96188427) No spacenav daemon found. Spacenav functionality is disabled

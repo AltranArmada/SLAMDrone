@@ -12,6 +12,9 @@ RUN sudo apt-get update
 #Install nano 
 RUN sudo apt-get install nano -y
 
+#Install Canberra
+RUN sudo apt-get install libcanberra-gtk-module -y
+
 # Install base package
 RUN sudo apt-get install gawk make git curl cmake -y
 RUN sudo apt-get install gnome-terminal -y
