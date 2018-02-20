@@ -30,3 +30,7 @@
 [submodule "Dev_code_version_SITL/ros_catkin_ws/src/ROS_quadrotor_simulator"]
 	path = Dev_code_version_SITL/ros_catkin_ws/src/ROS_quadrotor_simulator
 	url = https://github.com/wilselby/ROS_quadrotor_simulator
+[submodule "Dev_code_version_SITL/ardupilot"]
+	path = Dev_code_version_SITL/ardupilot
+	url = https://github.com/erlerobot/ardupilot
+	branch = gazebo
