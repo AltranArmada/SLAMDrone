@@ -13,7 +13,7 @@ RUN sudo apt-get update
 RUN sudo apt-get install nano -y
 
 #Install Canberra
-RUN sudo apt-get install libcanberra-gtk-module -y
+RUN sudo apt-get install libcanberra-gtk3-module -y
 
 # Install base package
 RUN sudo apt-get install gawk make git curl cmake -y
