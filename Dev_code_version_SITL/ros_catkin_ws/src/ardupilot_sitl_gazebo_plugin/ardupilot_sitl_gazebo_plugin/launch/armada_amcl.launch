@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="simRate" default="nan"/>
+  <!-- Enable simulation clock -->
+  <param name="use_sim_time" type="bool" value="true" />
+  <include file="$(find mavros)/launch/apm_sitl.launch"></include>
+
+  <arg name="enable_logging" default="true"/>
+  <arg name="enable_ground_truth" default="true"/>
+  <arg name="log_file" default="armada"/>
+  <arg name="headless" default="false"/>
+  <arg name="gui" default="true"/>
+  <arg name="world_name" default="$(find ardupilot_sitl_gazebo_plugin)/worlds/empty_world/empty.world"/> 
+  <!--<arg name="world_name" default="$(find ardupilot_sitl_gazebo_plugin)/worlds/turtlebot_playground/turtlebot_playground.world"/>-->
+  <!--<env name="GAZEBO_MODEL_PATH" value="$(find drcsim_model_resources)/gazebo_models/environments:$(find ardupilot_sitl_gazebo_plugin)/meshes/meshes_sensors:$(find ardupilot_sitl_gazebo_plugin)/meshes/meshes_outdoor:$(find ardupilot_sitl_gazebo_plugin)/meshes/meshes_warehouse"/>-->
+  <arg name="name" default="armada"/>
+  <arg name="model" default="$(find ardupilot_sitl_gazebo_plugin)/urdf/armada_base.xacro"/>
+  <arg name="tf_prefix" default="$(optenv ROS_NAMESPACE)"/>
+  <arg name="debug" default="true"/>
+  <arg name="verbose" default="true"/>
+
+  <!-- Initial pose for the drone -->
+  <arg name="x" default="0.0"/> <!-- [m], positive to the North -->
+  <arg name="y" default="0.0"/> <!-- [m], negative to the East -->
+  <arg name="z" default="0.08"/> <!-- [m], positive Up -->
+  <arg name="roll" default="0"/> <!-- [rad] -->
+  <arg name="pitch" default="0"/> <!-- [rad] -->
+  <arg name="yaw" default="0"/> <!-- [rad], negative clockwise -->
+
+  <!-- send the robot XML to param server -->
+  <param name="robot_description" command="
+    $(find xacro)/xacro.py '$(arg model)'
+    enable_logging:=$(arg enable_logging)
+    enable_ground_truth:=$(arg enable_ground_truth)
+    log_file:=$(arg log_file)"
+  />
+  <param name="tf_prefix" type="string" value="$(arg tf_prefix)" />
+
+  <!-- push robot_description to factory and spawn robot in gazebo -->
+  <node name="spawn_armada" pkg="gazebo_ros" type="spawn_model"
+   args="-param robot_description
+         -urdf
+         -x $(arg x)
+         -y $(arg y)
+         -z $(arg z)
+         -R $(arg roll)
+         -P $(arg pitch)
+         -Y $(arg yaw)
+         -model $(arg name)"
+   respawn="false" output="screen">
+  </node>
+
+
+	
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="paused" value="true"/>   <!-- value unrelevant due to Arducopter plugin steps --> 
+    <arg name="headless" value="$(arg headless)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="world_name" value="$(arg world_name)"/>
+  </include> 
+<!--  <node name="tag1" pkg="gazebo_ros" type="spawn_model" args="-file $(find rotors_description)/urdf/ARtag.urdf -urdf -x 0.0 -y 0.0 -z 0.01 -model ARtag1" respawn="false" />-->
+
+ <!--<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher12" args="0.1 0 0 0 0 0 move_base/current_goal map 10"/>-->
+  <!--<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher1" args="0.1 0 0 0 0 0 base_link_inertia map 10"/>-->
+  <!--<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher4" args="0.1 0 0 0 0 0 quad/camera_link map 10"/>
+  <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher5" args="0.1 0 0 0 0 0 quad/imu_link map 10"/>
+  <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher6" args="0.1 0 0 0 0 0 quad/ground_truth/odometry_sensorgt_link map 10"/>
+  <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher7" args="0.1 0 0 0 0 0 quad/imugt_link map 10"/>
+  <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher8" args="0.1 0 0 0 0 0 rotor_0 map 10"/>
+  <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher9" args="0.1 0 0 0 0 0 rotor_1 map 10"/>
+  <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher10" args="0.1 0 0 0 0 0 rotor_2 map 10"/>
+  <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher11" args="0.1 0 0 0 0 0 rotor_3 map 10"/>
+    <node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="0.0 0.0 0.0 0 0 0.0 map odom 10"/
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_scan_link" args="0.0 0.0 0.0 0 0 0.0 base_link scan_link 10"/>
+<node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="0.0 0.0 0.0 0 0 0.0 map odom 10"/>>-->
+ <node pkg="tf" type="static_transform_publisher" name="odom_to_base_link" args="0.0 0.0 0.0 0 0 0.0 odom base_link 10">
+	<param name="publish_frequency" value="10000"/>
+ </node> 
+
+	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+			<param name="publish_frequency" value="1000"/>
+	</node>
+<!-- Localization -->
+
+ <!-- Map server -->
+  <arg name="map_file" default="$(find ardupilot_sitl_gazebo_plugin)/maps/hector_map_new_res.yaml"/>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+
+  <!-- Place map frame at odometry frame -->
+  <!--<node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster"
+      args="0 0 0 0 0 0 map odom 10"/>-->
+
+  <!-- Localization -->
+  <node pkg="amcl" type="amcl" name="amcl" output="screen">
+    <param name="odom_frame_id" value="odom"/>
+    <param name="global_frame_id" value="map" />
+    <param name="odom_model_type" value="omni"/> <!--value="diff-corrected"-->
+    <param name="odom_alpha5" value="0.1"/>
+    <param name="transform_tolerance" value="0.2" />
+    <param name="gui_publish_rate" value="10.0"/>
+    <param name="laser_max_beams" value="30"/>
+    <param name="min_particles" value="500"/>
+    <param name="max_particles" value="5000"/>
+    <param name="kld_err" value="0.05"/>
+    <param name="kld_z" value="0.99"/>
+    <param name="odom_alpha1" value="0.2"/>
+    <param name="odom_alpha2" value="0.2"/>
+    <!-- translation std dev, m -->
+    <param name="odom_alpha3" value="0.8"/>
+    <param name="odom_alpha4" value="0.2"/>
+    <param name="laser_z_hit" value="0.5"/>
+    <param name="laser_z_short" value="0.05"/>
+    <param name="laser_z_max" value="0.05"/>
+    <param name="laser_z_rand" value="0.5"/>
+    <param name="laser_sigma_hit" value="0.2"/>
+    <param name="laser_lambda_short" value="0.1"/>
+    <param name="laser_lambda_short" value="0.1"/>
+    <param name="laser_model_type" value="likelihood_field"/>
+   <!-- <param name="laser_model_type" value="beam"/> -->
+  <param name="laser_likelihood_max_dist" value="2.0"/>
+  <param name="update_min_d" value="0.2"/>
+  <param name="update_min_a" value="0.5"/>
+  <param name="resample_interval" value="1"/>
+  <param name="transform_tolerance" value="0.1"/>
+  <param name="recovery_alpha_slow" value="0.0"/>
+  <param name="recovery_alpha_fast" value="0.0"/>
+    <param name="update_min_d" value="0.5"/>
+    <param name="update_min_a" value="1.0"/>
+    <param name="use_map_topic" value="true"/>
+</node>
+
+<!-- Move base -->
+ <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+
+    <rosparam file="$(find ardupilot_sitl_gazebo_plugin)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find ardupilot_sitl_gazebo_plugin)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find ardupilot_sitl_gazebo_plugin)/config/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find ardupilot_sitl_gazebo_plugin)/config/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find ardupilot_sitl_gazebo_plugin)/config/base_local_planner_params.yaml" command="load" /> 
+     <rosparam file="$(find ardupilot_sitl_gazebo_plugin)/config/move_base_params.yaml" command="load" />
+    <rosparam file="$(find ardupilot_sitl_gazebo_plugin)/config/dwa_local_planner_params.yaml" command="load" /> 
+     <rosparam file="$(find ardupilot_sitl_gazebo_plugin)/config/global_planner_params.yaml" command="load" />
+    <rosparam file="$(find ardupilot_sitl_gazebo_plugin)/config/navfn_global_planner_params.yaml" command="load" /> 
+
+ <!--   <remap from="cmd_vel" to="erlecopter/command/motor_speed"/> 
+    <param name="global_costmap/global_frame" value="map"/>
+    <param name="global_costmap/robot_base_frame" value="base_link"/>
+     <param name="local_costmap/global_frame" value="odom"/>  
+    <param name="local_costmap/robot_base_frame" value="base_link"/>
+    <param name="DWAPlannerROS/global_frame_id" value="odom"/>-->
+
+    <remap from="cmd_vel" to="cmd_vel_bkp"/>
+    <remap from="odom" to="odom"/>
+    <remap from="scan" to="scan"/>
+</node> 
+
+<!-- Move base transform -->
+  <node pkg="move_base" type="move_base_transform" respawn="false" name="move_base_trans" output="screen">
+  <remap from="cmd_vel_trans" to="mavros/setpoint_velocity/cmd_vel"/>
+</node> 
+
+
+ <!-- Visualisation RVIZ -->
+  <include file="$(find ardupilot_sitl_gazebo_plugin)/launch/armada_rviz_amcl.launch" />
+
+</launch>

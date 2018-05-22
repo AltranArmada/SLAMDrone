@@ -1,0 +1,5 @@
+forward_point_distance: 0.1 # 0.325  - how far along to place an additional scoring point
+  stop_time_buffer: 0.2         # 0.2    - amount of time a robot must stop in before colliding for a valid traj.
+  scaling_speed: 0.25           # 0.25   - absolute velocity at which to start scaling the robot's footprint
+  max_scaling_factor: 0.2       # 0.2    - how much to scale the robot's footprint when at speed.
+

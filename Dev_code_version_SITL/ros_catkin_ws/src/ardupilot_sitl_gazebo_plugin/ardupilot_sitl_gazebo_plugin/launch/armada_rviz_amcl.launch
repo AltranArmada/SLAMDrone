@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="model" default="$(find ardupilot_sitl_gazebo_plugin)/urdf/armada_base.xacro"/>
+  <arg name="enable_logging" default="true"/>
+  <arg name="enable_ground_truth" default="true"/>
+  <arg name="log_file" default="armada"/>
+
+  <!--send the robot XML to param server -->
+  <param name="robot_description" command="
+    $(find xacro)/xacro.py '$(find ardupilot_sitl_gazebo_plugin)/urdf/armada_base.xacro'
+    enable_logging:=$(arg enable_logging)
+    enable_ground_truth:=$(arg enable_ground_truth)
+    log_file:=$(arg log_file)"
+  />
+
+  <!-- send fake joint values -->
+ <!-- <param name="tf_prefix" value="" />
+  <param name="use_gui" value="false"/>
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="use_gui" value="False"/>
+  </node> -->
+
+  <!-- Combine joint values 
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/> -->
+
+  <param name="tf_prefix" value="" />
+  <param name="use_gui" value="false"/>
+	
+
+  <!-- Show in Rviz   -->
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find ardupilot_sitl_gazebo_plugin)/resource/quad_2nav.rviz" output="screen" required="true" />
+<!--  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find quad_2dnav)/resource/amcl.rviz"/> -->
+
+</launch>
+

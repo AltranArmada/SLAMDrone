@@ -1,0 +1,54 @@
+#Changing flight mode to circle with a CIRCLE_RADIUS of 2000cm
+
+mode circle
+param set circle_radius 2000
+
+TÃ©lÃ©charger les paquets pour la navigation : 
+git clone https://github.com/ros-perception/slam_gmapping.git
+git clone https://github.com/ros-planning/navigation.git
+git clone https://github.com/orocos/orocos_kinematics_dynamics.git
+
+(Source http://moorerobots.com/blog/post/3)
+
+Ajouter au dockerfile : 
+
+sudo apt-get install gedit
+sudo apt-get install libsdl-image1.2-dev
+sudo apt-get install libsdl-dev
+sudo apt-get install liblti-dev
+sudo apt-get install libnewmat10-dev
+sudo apt-get install libboost-dev
+sudo apt-get install libcppunit-dev
+sudo apt-get install cmake-curses-gui
+
+
+Compiler ROS workspace : 
+cd ~/Dev_code_version_SITL/ros_catkin_ws
+source devel/setup.bash
+catkin_make -j 4
+
+catkin_make_isolated --pkg mav_msgs action_controller mavros_msgs gazebo_msgs --install
+catkin_make_isolated
+
+catkin_make_isolated -DCATKIN_WHITELIST_PACKAGES="orocos-bfl"
+
+#Install orocos : 
+export CMAKE_INCLUDE_PATH=/path/to/installed/library/include
+export CMAKE_LIBRARY_PATH=/path/to/installed/library/lib
+
+(https://people.mech.kuleuven.be/~tdelaet/bfl_doc/installation_guide/node12.html)
+
+rosrun map_server map_saver [-f mapname]
+
+#suposed to fix "FCU: PreArm: RC not calibrated"
+param load ../Tools/Frame_params/Erle-Copter.param
+
+#set ARMING_CHECK parameter to 0 :
+GUIDED>param set ARMING_CHECK 0
+
+0.0025s sensor lidar publishing frequency
+
+#error : 
+Program received signal SIGSEGV, Segmentation fault.
+0x00000000004190c6 in SensorConv::callBack(sensor_msgs::Range_<std::allocator<void> > const&) ()
+
