@@ -1,18 +1,19 @@
-obstacle_range: 29.5 #2.5
+obstacle_range: 15.5 #2.5
 raytrace_range: 10.0 #3.0
+footprint: [[0.2, 0.2], [-0.2, 0.2], [-0.2, -0.2], [0.2, -0.2]]
 #footprint: [[0.141, 0.141], [-0.141, 0.141], [-0.141, -0.141], [0.141, -0.141]]
-footprint: [[1.541, 1.541], [-1.541, 1.541], [-1.541, -1.541], [1.541, -1.541]]
 #robot_radius: ir_of_robot
 # robot_radius: 0.3 # distance a circular robot should be clear of the obstacle
-inflation_radius: 0.0 #0.2
-cost_scaling_factor: 0.0 #2.58
+inflation_radius: 0.65 #0.2
+cost_scaling_factor: 10.0 #2.58
 
-observation_sources: laser_scan_sensor #scan
+
+observation_sources: laser_scan_sensor 
 
 # marking - add obstacle information to cost map
 # clearing - clear obstacle information to cost map
-laser_scan_sensor: {sensor_frame: lidar_link, data_type: LaserScan, topic: scan, marking: true, clearing: true}
+laser_scan_sensor: {sensor_frame: /lidar_link, data_type: LaserScan, topic: /scan, marking: true, clearing: true}
 
 #point_cloud_sensor: {sensor_frame: frame_name, data_type: PointCloud, topic: topic_name, marking: true, clearing: true}
 
-#resolution: 0.01
+#max_obstacle_height: 5

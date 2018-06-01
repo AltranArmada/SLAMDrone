@@ -111,7 +111,7 @@
 
 
     <plugin name="ardupilot_sitl_gazebo_plugin" filename="libardupilot_sitl_gazebo_plugin.so">
-    <UAV_MODEL>erlecopter</UAV_MODEL>
+    <UAV_MODEL></UAV_MODEL>
     </plugin>
   </world>
 </sdf>

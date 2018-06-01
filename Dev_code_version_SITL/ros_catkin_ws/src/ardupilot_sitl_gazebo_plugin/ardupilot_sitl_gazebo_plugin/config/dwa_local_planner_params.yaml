@@ -1,49 +1,29 @@
 DWAPlannerROS:
 
-# Robot Configuration Parameters
-  max_vel_x: 0.75 #2.25
-  min_vel_x: 0.0 #-2.25 
-
-  max_vel_y: 0.75
-  min_vel_y: 0.0
-
-  # The velocity when robot is moving in a straight line
-  max_trans_vel:  1.0 #1.0 #0.18
-  min_trans_vel:  0.5 #0.6  #0.05
-  #trans_stopped_vel: 0.55 
-
-  max_rot_vel: 20 #3.5 #3.0 #1.8
-  min_rot_vel: 5 #2.1 #0.7
-  #rot_stopped_vel: 1.9
-
-  acc_lim_x: 0.5 #2.0 #robot accelerates very slowly because it weighs so much
-  acc_lim_theta: 10.2 #2.0
-  acc_lim_y: 0.5
-
 # Goal Tolerance Parameters
-  yaw_goal_tolerance: 0.2  # 0.05
-  xy_goal_tolerance: 0.5 # 0.10
+  yaw_goal_tolerance: 0.05  # 0.2
+  xy_goal_tolerance: 0.1 # 0.50
   # latch_xy_goal_tolerance: false
 
 # Forward Simulation Parameters
-  sim_time: 4.0       # 1.7
+  sim_time: 2.0       # 1.7
   vx_samples: 20       # 3
   vy_samples: 20       # diff drive robot, there is only one sample
   vtheta_samples: 30  # 20
-  sim_granularity: 0.0125  # 0.025
+  sim_granularity: 0.025 #0.0125  # 0.025
 
 
 # Trajectory Scoring Parameters
-  path_distance_bias: 32.0      # 32.0   - weighting for how much it should stick to the global path plan
-  goal_distance_bias: 24.0      # 24.0   - wighting for how much it should attempt to reach its goal
-  occdist_scale: 0.005            # 0.01   - weighting for how much the controller should avoid obstacles
+  path_distance_bias: 45.0      # 32.0   - weighting for how much it should stick to the global path plan
+  goal_distance_bias: 20.0      # 24.0   - wighting for how much it should attempt to reach its goal
+  occdist_scale: 0.02            # 0.005   - weighting for how much the controller should avoid obstacles
   
 # Oscillation Prevention Parameters
-  oscillation_reset_dist: 500  # 0.05   - how far to travel before resetting oscillation flags
+  oscillation_reset_dist: 0.05 #500  # 0.05   - how far to travel before resetting oscillation flags
 
 # Debugging
   publish_traj_pc : true
   publish_cost_grid_pc: true
-  global_frame_id: odom
+  global_frame_id: map #map  
 
 

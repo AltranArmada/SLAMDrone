@@ -1,0 +1,142 @@
+<launch>
+
+  <arg name="simRate" default="nan"/>
+  <!-- Enable simulation clock -->
+  <param name="use_sim_time" type="bool" value="true" />
+  <include file="$(find mavros)/launch/apm_sitl.launch"></include>
+
+  <arg name="enable_logging" default="true"/>
+  <arg name="enable_ground_truth" default="true"/>
+  <arg name="log_file" default="armada"/>
+  <arg name="headless" default="false"/>
+  <arg name="gui" default="true"/>
+  <arg name="world_name" default="$(find ardupilot_sitl_gazebo_plugin)/worlds/empty_world/empty.world"/>
+  <env name="GAZEBO_MODEL_PATH" value="$(find drcsim_model_resources)/gazebo_models/environments:$(find ardupilot_sitl_gazebo_plugin)/meshes/meshes_sensors:$(find ardupilot_sitl_gazebo_plugin)/meshes/meshes_outdoor:$(find ardupilot_sitl_gazebo_plugin)/meshes/meshes_warehouse"/>
+  <arg name="name" default="armada"/>
+  <arg name="model" default="$(find ardupilot_sitl_gazebo_plugin)/urdf/armada_base.xacro"/>
+  <arg name="tf_prefix" default="$(optenv ROS_NAMESPACE)"/>
+  <arg name="debug" default="true"/>
+  <arg name="verbose" default="true"/>
+
+  <!-- Initial pose for the drone -->
+  <arg name="x" default="0.0"/> <!-- [m], positive to the North -->
+  <arg name="y" default="0.0"/> <!-- [m], negative to the East -->
+  <arg name="z" default="0.08"/> <!-- [m], positive Up -->
+  <arg name="roll" default="0"/> <!-- [rad] -->
+  <arg name="pitch" default="0"/> <!-- [rad] -->
+  <arg name="yaw" default="0"/> <!-- [rad], negative clockwise -->
+
+  <!-- send the robot XML to param server -->
+  <param name="robot_description" command="
+    $(find xacro)/xacro.py '$(arg model)'
+    enable_logging:=$(arg enable_logging)
+    enable_ground_truth:=$(arg enable_ground_truth)
+    log_file:=$(arg log_file)"
+  />
+  <param name="tf_prefix" type="string" value="$(arg tf_prefix)" />
+
+  <!-- push robot_description to factory and spawn robot in gazebo -->
+  <node name="spawn_armada" pkg="gazebo_ros" type="spawn_model"
+   args="-param robot_description
+         -urdf
+         -x $(arg x)
+         -y $(arg y)
+         -z $(arg z)
+         -R $(arg roll)
+         -P $(arg pitch)
+         -Y $(arg yaw)
+         -model $(arg name)"
+   respawn="false" output="screen">
+  </node>
+
+
+	
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="paused" value="true"/>   <!-- value unrelevant due to Arducopter plugin steps --> 
+    <arg name="headless" value="$(arg headless)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="world_name" value="$(arg world_name)"/>
+  </include>
+<!--  <node name="tag1" pkg="gazebo_ros" type="spawn_model" args="-file $(find rotors_description)/urdf/ARtag.urdf -urdf -x 0.0 -y 0.0 -z 0.01 -model ARtag1" respawn="false" />-->
+
+ <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher12" args="0.1 0 0 0 0 0 move_base/current_goal map 10"/>
+
+  <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher1" args="0.1 0 0 0 0 0 base_link_inertia map 10"/>
+
+
+  <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher4" args="0.1 0 0 0 0 0 quad/camera_link map 10"/>
+  <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher5" args="0.1 0 0 0 0 0 quad/imu_link map 10"/>
+  <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher6" args="0.1 0 0 0 0 0 quad/ground_truth/odometry_sensorgt_link map 10"/>
+  <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher7" args="0.1 0 0 0 0 0 quad/imugt_link map 10"/>
+  <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher8" args="0.1 0 0 0 0 0 rotor_0 map 10"/>
+  <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher9" args="0.1 0 0 0 0 0 rotor_1 map 10"/>
+  <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher10" args="0.1 0 0 0 0 0 rotor_2 map 10"/>
+  <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher11" args="0.1 0 0 0 0 0 rotor_3 map 10"/>
+
+
+    <node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="0.0 0.0 0.0 0 0 0.0 map odom 10"/>
+<node pkg="tf" type="static_transform_publisher" name="odom_to_base_link" args="0.0 0.0 0.0 0 0 0.0 odom base_link 10"/>
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_scan_link" args="0.0 0.0 0.0 0 0 0.0 base_link scan_link 10"/>
+  <!-- Load a Map  -->
+  <node name="map_server" pkg="map_server" type="map_server" args=" $(find quad_2dnav)/maps/hotel1.yaml" />
+ 
+  <!-- Load AMCL  -->
+  <include file="$(find quad_2dnav)/launch/amcl_quad.launch" />
+
+  <!-- Load Navigation Stack  -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <remap from="odom" to="/quad/ground_truth/odometry" />
+    <rosparam file="$(find quad_2dnav)/resource/planning/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find quad_2dnav)/resource/planning/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find quad_2dnav)/resource/planning/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find quad_2dnav)/resource/planning/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find quad_2dnav)/resource/planning/base_local_planner_params.yaml" command="load" />
+  </node>
+
+<!-- Load gmapping node -->
+<node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">      
+        <param name="odom_frame" value="odom"/>
+		<param name="base_frame" value="base_link"/>
+		<param name="map_frame" value="map"/>
+		<param name="map_update_interval" value="5.0"/>
+		<param name="maxUrange" value="80.0"/>
+		<param name="maxRange" value="8.0"/>
+		<param name="sigma" value="0.05"/>
+		<param name="kernelSize" value="1"/>
+		<param name="lstep" value="0.05"/>
+		<param name="astep" value="0.05"/>
+		<param name="iterations" value="5"/>
+		<param name="lsigma" value="0.075"/>
+		<param name="ogain" value="3.0"/>
+		<param name="lskip" value="0"/>
+		<param name="minimumScore" value="0.0"/>
+		<param name="srr" value="0.01"/>
+		<param name="srt" value="0.02"/>
+		<param name="str" value="0.01"/>
+		<param name="stt" value="0.02"/>
+		<param name="linearUpdate" value="0.5"/>
+		<param name="angularUpdate" value="0.436"/>
+		<param name="temporalUpdate" value="-1.0"/>
+		<param name="resampleThreshold" value="0.5"/>
+		<param name="particles" value="80"/>
+
+		<param name="xmin" value="-10.0"/>
+		<param name="ymin" value="-10.0"/>
+		<param name="xmax" value="10.0"/>
+		<param name="ymax" value="10.0"/>
+
+		<param name="delta" value="0.05"/>
+		<param name="llsamplerange" value="0.01"/>
+		<param name="llsamplestep" value="0.01"/>
+		<param name="lasamplerange" value="0.005"/>
+		<param name="lasamplestep" value="0.005"/>
+		<remap from="scan" to="scan"/>
+	</node>
+	
+
+  <!-- Visualisation RVIZ -->
+  <include file="$(find ardupilot_sitl_gazebo_plugin)/launch/view_armada_rviz.launch" />
+
+  
+</launch>
+

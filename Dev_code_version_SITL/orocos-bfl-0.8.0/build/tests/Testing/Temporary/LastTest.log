@@ -1,0 +1,137 @@
+Start testing: Apr 06 10:49 UTC
+----------------------------------------------------------
+1/7 Testing: test_ekf
+1/7 Test: test_ekf
+Command: "/home/user/Dev_code_version_SITL/orocos-bfl-0.8.0/build/tests/test_ekf"
+Directory: /home/user/Dev_code_version_SITL/orocos-bfl-0.8.0/build/tests
+"test_ekf" start time: Apr 06 10:49 UTC
+Output:
+----------------------------------------------------------
+.
+
+OK (1)
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test_ekf" end time: Apr 06 10:49 UTC
+"test_ekf" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/7 Testing: test_pdf
+2/7 Test: test_pdf
+Command: "/home/user/Dev_code_version_SITL/orocos-bfl-0.8.0/build/tests/test_pdf"
+Directory: /home/user/Dev_code_version_SITL/orocos-bfl-0.8.0/build/tests
+"test_pdf" start time: Apr 06 10:49 UTC
+Output:
+----------------------------------------------------------
+DiscretePdf::Samplefrom(int, void *): No such sampling method
+Box-Muller not implemented yet!
+Box-Muller not implemented yet!
+Mixture::Samplefrom(T, void *): No such sampling method
+Mixture::Samplefrom(T, void *): No such sampling method
+Mixture::Samplefrom(T, void *): No such sampling method
+Mixture::Samplefrom(T, void *): No such sampling method
+........
+
+OK (8)
+<end of output>
+Test time =   0.06 sec
+----------------------------------------------------------
+Test Passed.
+"test_pdf" end time: Apr 06 10:49 UTC
+"test_pdf" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/7 Testing: test_sample
+3/7 Test: test_sample
+Command: "/home/user/Dev_code_version_SITL/orocos-bfl-0.8.0/build/tests/test_sample"
+Directory: /home/user/Dev_code_version_SITL/orocos-bfl-0.8.0/build/tests
+"test_sample" start time: Apr 06 10:49 UTC
+Output:
+----------------------------------------------------------
+...
+
+OK (3)
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test_sample" end time: Apr 06 10:49 UTC
+"test_sample" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/7 Testing: test_matrixwrapper
+4/7 Test: test_matrixwrapper
+Command: "/home/user/Dev_code_version_SITL/orocos-bfl-0.8.0/build/tests/test_matrixwrapper"
+Directory: /home/user/Dev_code_version_SITL/orocos-bfl-0.8.0/build/tests
+"test_matrixwrapper" start time: Apr 06 10:49 UTC
+Output:
+----------------------------------------------------------
+.
+
+OK (1)
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test_matrixwrapper" end time: Apr 06 10:49 UTC
+"test_matrixwrapper" time elapsed: 00:00:00
+----------------------------------------------------------
+
+5/7 Testing: test_model
+5/7 Test: test_model
+Command: "/home/user/Dev_code_version_SITL/orocos-bfl-0.8.0/build/tests/test_model"
+Directory: /home/user/Dev_code_version_SITL/orocos-bfl-0.8.0/build/tests
+"test_model" start time: Apr 06 10:49 UTC
+Output:
+----------------------------------------------------------
+...
+
+OK (3)
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test_model" end time: Apr 06 10:49 UTC
+"test_model" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/7 Testing: test_smoother
+6/7 Test: test_smoother
+Command: "/home/user/Dev_code_version_SITL/orocos-bfl-0.8.0/build/tests/test_smoother"
+Directory: /home/user/Dev_code_version_SITL/orocos-bfl-0.8.0/build/tests
+"test_smoother" start time: Apr 06 10:49 UTC
+Output:
+----------------------------------------------------------
+..
+
+OK (2)
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"test_smoother" end time: Apr 06 10:49 UTC
+"test_smoother" time elapsed: 00:00:00
+----------------------------------------------------------
+
+7/7 Testing: test_complete_filter
+7/7 Test: test_complete_filter
+Command: "/home/user/Dev_code_version_SITL/orocos-bfl-0.8.0/build/tests/test_complete_filter"
+Directory: /home/user/Dev_code_version_SITL/orocos-bfl-0.8.0/build/tests
+"test_complete_filter" start time: Apr 06 10:49 UTC
+Output:
+----------------------------------------------------------
+.Running 4 different filters. This may take a few minutes... 
+.
+
+OK (2)
+<end of output>
+Test time =   9.40 sec
+----------------------------------------------------------
+Test Passed.
+"test_complete_filter" end time: Apr 06 10:49 UTC
+"test_complete_filter" time elapsed: 00:00:09
+----------------------------------------------------------
+
+End testing: Apr 06 10:49 UTC

@@ -16,8 +16,8 @@
 	<param name="tf_prefix" value="" />
 	<param name="use_gui" value="false"/>
 	
-	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find ardupilot_sitl_gazebo_plugin)/resource/armada.rviz" output="screen" required="true" /> 
-<!--	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find ardupilot_sitl_gazebo_plugin)/resource/quad_2nav.rviz" output="screen" required="true" /> -->
+<!--	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find ardupilot_sitl_gazebo_plugin)/resource/armada.rviz" output="screen" required="true" /> -->
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find ardupilot_sitl_gazebo_plugin)/resource/quad_2nav.rviz" output="screen" required="true" /> 
 </launch>
 
 

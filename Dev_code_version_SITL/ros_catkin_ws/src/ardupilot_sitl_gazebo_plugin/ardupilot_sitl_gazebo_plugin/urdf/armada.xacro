@@ -2,7 +2,7 @@
 
 <robot name="armada" xmlns:xacro="http://ros.org/wiki/xacro">
   <!-- Properties -->
-  <xacro:property name="namespace" value="erlecopter" />
+  <xacro:property name="namespace" value="" />
   <xacro:property name="rotor_velocity_slowdown_sim" value="10" />
   <xacro:property name="mesh_file" value="erlecopter.dae" />
   <xacro:property name="mesh_scale" value="1 1 1"/> <!-- 1 1 1 -->
@@ -65,129 +65,27 @@
   <xacro:property name="M_PI" value="3.1415926535897931" />
   
 
-  <!-- Sonar sensor 
- <xacro:include filename="$(find ardupilot_sitl_gazebo_plugin)/urdf/sensors/real_sonar_sensor.urdf.xacro" />-->
-
-  <!-- Configuration SIDE 
-  <xacro:real_sonar_sensor
-    name="real_sonar_front"
-    parent="base_link"
-    ros_topic="sonar_front"
-    update_rate="10"
-    min_range="0.02"
-    max_range="7.65"
-    radius="2.3"
-    sensor_mesh="max_sonar_ez4/meshes/max_sonar_ez4.dae">
-    <origin xyz="0.1 0 0" rpy="0 ${270*M_PI/180} 0"/>
-  </xacro:real_sonar_sensor> 
-
-  <xacro:real_sonar_sensor
-    name="real_sonar_down"
-    parent="base_link"
-    ros_topic="sonar_down"
-    update_rate="10"
-    min_range="0.02"
-    max_range="7.65"
-    radius="2.3"
-    sensor_mesh="max_sonar_ez4/meshes/max_sonar_ez4.dae">
-    <origin xyz="-0.1 0 0" rpy="0 ${90*M_PI/180} 0"/>
-  </xacro:real_sonar_sensor> 
-
-  <xacro:real_sonar_sensor
-    name="real_sonar_right"
-    parent="base_link"
-    ros_topic="sonar_right"
-    update_rate="10"
-    min_range="0.02"
-    max_range="7.65"
-    radius="2.3"
-    sensor_mesh="max_sonar_ez4/meshes/max_sonar_ez4.dae">
-    <origin xyz="0 -0.1 0" rpy="${270*M_PI/180} 0 0 "/>
-  </xacro:real_sonar_sensor> 
-
-  <xacro:real_sonar_sensor
-    name="real_sonar_left"
-    parent="base_link"
-    ros_topic="sonar_left"
-    update_rate="10"
-    min_range="0.02"
-    max_range="7.65"
-    radius="2.3"
-    sensor_mesh="max_sonar_ez4/meshes/max_sonar_ez4.dae">
-    <origin xyz="0 0.1 0" rpy="${90*M_PI/180} 0 0"/>
-  </xacro:real_sonar_sensor> -->
- 
-  <!-- Configuration FEET 
-  <xacro:real_sonar_sensor
-    name="real_sonar_front_left"
-    parent="base_link"
-    ros_topic="sonar_front_left"
-    update_rate="10"
-    min_range="0.02"
-    max_range="7.65"
-    radius="2.3"
-    sensor_mesh="max_sonar_ez4/meshes/max_sonar_ez4.dae">
-    <origin xyz="0.15 0.15 -0.03" rpy="0 ${270*M_PI/180} ${45*M_PI/180}"/>
-  </xacro:real_sonar_sensor> 
-
-  <xacro:real_sonar_sensor
-    name="real_sonar_back_right"
-    parent="base_link"
-    ros_topic="sonar_back_right"
-    update_rate="10"
-    min_range="0.02"
-    max_range="7.65"
-    radius="2.3"
-    sensor_mesh="max_sonar_ez4/meshes/max_sonar_ez4.dae">
-    <origin xyz="-0.15 -0.15 -0.03" rpy="0 ${90*M_PI/180} ${45*M_PI/180}"/>
-  </xacro:real_sonar_sensor> 
-
-  <xacro:real_sonar_sensor
-    name="real_sonar_front_right"
-    parent="base_link"
-    ros_topic="sonar_front_right"
-    update_rate="10"
-    min_range="0.02"
-    max_range="7.65"
-    radius="2.3"
-    sensor_mesh="max_sonar_ez4/meshes/max_sonar_ez4.dae">
-    <origin xyz="0.15 -0.15 -0.03" rpy="${270*M_PI/180} 0 ${45*M_PI/180} "/>
-  </xacro:real_sonar_sensor> 
-
-  <xacro:real_sonar_sensor
-    name="real_sonar_back_left"
-    parent="base_link"
-    ros_topic="sonar_back_left"
-    update_rate="10"
-    min_range="0.02"
-    max_range="7.65"
-    radius="2.3"
-    sensor_mesh="max_sonar_ez4/meshes/max_sonar_ez4.dae">
-    <origin xyz="-0.15 0.15 -0.03" rpy="${90*M_PI/180} 0 ${45*M_PI/180}"/>
-  </xacro:real_sonar_sensor> -->
-
   <!-- Lidar sensor -->
   <xacro:include filename="$(find ardupilot_sitl_gazebo_plugin)/urdf/sensors/lidar_sensor.urdf.xacro" />
-
    <xacro:lidar_sensor
     name="lidar"
     parent="base_link"
-    ros_topic="lidar"
     update_rate="10"
-    min_range="0.01"
-    max_range="10.0"
+    min_range="0.06"
+    max_range="20.0"
     field_of_view_horizontal="${2*M_PI}"
     field_of_view_vertical="${1*M_PI/180}"
-    ray_count_horizontal="360"
-    ray_count_vertical="1"
-    sensor_mesh_base_1="velodyne_VLP16/meshes/VLP16_base_1.dae"
-    sensor_mesh_base_2="velodyne_VLP16/meshes/VLP16_base_2.dae"
-    sensor_mesh_scan="velodyne_VLP16/meshes/VLP16_scan.dae">
+    ray_count_horizontal="768"
+    ray_count_vertical="2"
+    sensor_mesh_base_1="$(find ardupilot_sitl_gazebo_plugin)/meshes/meshes_sensors/velodyne_VLP16/meshes/VLP16_base_1.dae"
+    sensor_mesh_base_2="$(find ardupilot_sitl_gazebo_plugin)/meshes/meshes_sensors/velodyne_VLP16/meshes/VLP16_base_2.dae"
+    sensor_mesh_scan="$(find ardupilot_sitl_gazebo_plugin)/meshes/meshes_sensors/velodyne_VLP16/meshes/VLP16_scan.dae">
     <origin xyz="0.0 0.0 0.06" rpy="0 0 0"/>
   </xacro:lidar_sensor> 
 
+
   <!-- Front facing camera -->
-<xacro:include filename="$(find ardupilot_sitl_gazebo_plugin)/urdf/sensors/generic_camera.urdf.xacro" />
+<!-- <xacro:include filename="$(find ardupilot_sitl_gazebo_plugin)/urdf/sensors/generic_camera.urdf.xacro" />
   <xacro:generic_camera
     name="erlecopter/front"
     parent="base_link"
@@ -200,7 +98,7 @@
     hfov="81"
     framename="erlecopter_frontcam">
     <origin xyz="0.1 0.0 0.05" rpy="0 0 0"/>
-</xacro:generic_camera>  
+</xacro:generic_camera>  -->
 
   <!-- Instantiate rotors -->
   <xacro:vertical_rotor
@@ -268,7 +166,8 @@
     <xacro:insert_block name="rotor_inertia" />
   </xacro:vertical_rotor>
 
-  <xacro:vertical_rotor robot_namespace="${namespace}"
+  <xacro:vertical_rotor 
+    robot_namespace="${namespace}"
     suffix="back_right"
     direction="cw"
     motor_constant="${motor_constant}"

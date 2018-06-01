@@ -24,7 +24,7 @@ xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
         <visual>
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
-            <mesh filename="model://board_camera/meshes/board_camera.dae"/>
+            <mesh filename="file://$(find ardupilot_sitl_gazebo_plugin)/meshes/meshes_sensors/board_camera/meshes/board_camera.dae"/>		
           <!--<box size="0.001 0.001 0.001" />-->
           </geometry>
           <!--<material name="Blue">

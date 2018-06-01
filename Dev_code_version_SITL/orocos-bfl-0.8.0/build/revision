@@ -1,0 +1,1 @@
+svn info /home/user/Dev_code_version_SITL/orocos-bfl-0.8.0 | grep '^Revision' | sed -e 's/Revision: *//'

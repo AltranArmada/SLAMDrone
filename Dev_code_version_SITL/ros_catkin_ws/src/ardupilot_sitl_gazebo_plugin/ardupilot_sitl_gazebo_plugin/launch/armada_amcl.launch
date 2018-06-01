@@ -35,8 +35,9 @@
     enable_ground_truth:=$(arg enable_ground_truth)
     log_file:=$(arg log_file)"
   />
-  <param name="tf_prefix" type="string" value="$(arg tf_prefix)" />
+  <param name="tf_prefix" type="string" value="$(arg tf_prefix)" /> 
 
+<!--  <param name="robot_description" command="$(find xacro)/xacro '$(find ardupilot_sitl_gazebo_plugin)/urdf/armada_base.xacro'" /> -->
   <!-- push robot_description to factory and spawn robot in gazebo -->
   <node name="spawn_armada" pkg="gazebo_ros" type="spawn_model"
    args="-param robot_description
@@ -48,8 +49,14 @@
          -P $(arg pitch)
          -Y $(arg yaw)
          -model $(arg name)"
-   respawn="false" output="screen">
-  </node>
+   respawn="false" output="screen"> 
+  </node> 
+
+<!-- Convert xacro and put on parameter server 
+<param name="robot_description" command="$(find xacro)/xacro.py $(find ardupilot_sitl_gazebo_plugin)/urdf/armada_base.xacro" /> -->
+
+<!-- Spawn a robot into Gazebo 
+<node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model robot" /> -->
 
 
 	
@@ -59,47 +66,33 @@
     <arg name="gui" value="$(arg gui)"/>
     <arg name="world_name" value="$(arg world_name)"/>
   </include> 
-<!--  <node name="tag1" pkg="gazebo_ros" type="spawn_model" args="-file $(find rotors_description)/urdf/ARtag.urdf -urdf -x 0.0 -y 0.0 -z 0.01 -model ARtag1" respawn="false" />-->
 
- <!--<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher12" args="0.1 0 0 0 0 0 move_base/current_goal map 10"/>-->
-  <!--<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher1" args="0.1 0 0 0 0 0 base_link_inertia map 10"/>-->
-  <!--<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher4" args="0.1 0 0 0 0 0 quad/camera_link map 10"/>
-  <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher5" args="0.1 0 0 0 0 0 quad/imu_link map 10"/>
-  <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher6" args="0.1 0 0 0 0 0 quad/ground_truth/odometry_sensorgt_link map 10"/>
-  <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher7" args="0.1 0 0 0 0 0 quad/imugt_link map 10"/>
-  <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher8" args="0.1 0 0 0 0 0 rotor_0 map 10"/>
-  <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher9" args="0.1 0 0 0 0 0 rotor_1 map 10"/>
-  <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher10" args="0.1 0 0 0 0 0 rotor_2 map 10"/>
-  <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher11" args="0.1 0 0 0 0 0 rotor_3 map 10"/>
-    <node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="0.0 0.0 0.0 0 0 0.0 map odom 10"/
-<node pkg="tf" type="static_transform_publisher" name="base_link_to_scan_link" args="0.0 0.0 0.0 0 0 0.0 base_link scan_link 10"/>
-<node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="0.0 0.0 0.0 0 0 0.0 map odom 10"/>>-->
- <node pkg="tf" type="static_transform_publisher" name="odom_to_base_link" args="0.0 0.0 0.0 0 0 0.0 odom base_link 10">
+  <!-- <node pkg="tf" type="static_transform_publisher" name="odom_to_base_link" args="0.0 0.0 0.0 0 0 0.0 odom base_link 10"> 
 	<param name="publish_frequency" value="10000"/>
- </node> 
+ </node> --> 
 
 	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
-	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
-			<param name="publish_frequency" value="1000"/>
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+			<param name="publish_frequency" value="10000"/>
+			<param name="use_gui" value="false"/>
+			<param name="use_tf_static" value="false"/>
 	</node>
-<!-- Localization -->
+<!-- Localization  -->
 
  <!-- Map server -->
-  <arg name="map_file" default="$(find ardupilot_sitl_gazebo_plugin)/maps/hector_map_new_res.yaml"/>
+  <arg name="map_file" default="$(find ardupilot_sitl_gazebo_plugin)/maps/mymap.yaml"/>
   <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
-  <!-- Place map frame at odometry frame -->
-  <!--<node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster"
-      args="0 0 0 0 0 0 map odom 10"/>-->
 
   <!-- Localization -->
   <node pkg="amcl" type="amcl" name="amcl" output="screen">
-    <param name="odom_frame_id" value="odom"/>
+    <param name="odom_frame_id" value="world"/>
+    <param name="base_frame_id" value="base_link" />
     <param name="global_frame_id" value="map" />
     <param name="odom_model_type" value="omni"/> <!--value="diff-corrected"-->
     <param name="odom_alpha5" value="0.1"/>
-    <param name="transform_tolerance" value="0.2" />
-    <param name="gui_publish_rate" value="10.0"/>
+    <param name="transform_tolerance" value="0.5" /> <!--0.2-->
+    <param name="gui_publish_rate" value="1.0"/> <!--10.0-->
     <param name="laser_max_beams" value="30"/>
     <param name="min_particles" value="500"/>
     <param name="max_particles" value="5000"/>
@@ -123,12 +116,11 @@
   <param name="update_min_d" value="0.2"/>
   <param name="update_min_a" value="0.5"/>
   <param name="resample_interval" value="1"/>
-  <param name="transform_tolerance" value="0.1"/>
   <param name="recovery_alpha_slow" value="0.0"/>
   <param name="recovery_alpha_fast" value="0.0"/>
     <param name="update_min_d" value="0.5"/>
     <param name="update_min_a" value="1.0"/>
-    <param name="use_map_topic" value="true"/>
+    <param name="use_map_topic" value="false"/>
 </node>
 
 <!-- Move base -->
@@ -152,7 +144,7 @@
     <param name="DWAPlannerROS/global_frame_id" value="odom"/>-->
 
     <remap from="cmd_vel" to="cmd_vel_bkp"/>
-    <remap from="odom" to="odom"/>
+    <remap from="odom" to="/ground_truth/odometry"/>
     <remap from="scan" to="scan"/>
 </node> 
 
@@ -160,6 +152,9 @@
   <node pkg="move_base" type="move_base_transform" respawn="false" name="move_base_trans" output="screen">
   <remap from="cmd_vel_trans" to="mavros/setpoint_velocity/cmd_vel"/>
 </node> 
+
+<!-- Sendding simple goals 
+  <node pkg="simple_navigation_goals" type="simple_navigation_goals" respawn="false" name="simple_navigation_goals" output="screen"/>  -->
 
 
  <!-- Visualisation RVIZ -->
