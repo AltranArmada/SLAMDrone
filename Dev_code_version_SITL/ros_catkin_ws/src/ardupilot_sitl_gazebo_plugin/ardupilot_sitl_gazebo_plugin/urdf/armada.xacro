@@ -7,7 +7,7 @@
   <xacro:property name="mesh_file" value="erlecopter.dae" />
   <xacro:property name="mesh_scale" value="1 1 1"/> <!-- 1 1 1 -->
   <xacro:property name="mesh_scale_prop" value="1 1 1"/>
-  <xacro:property name="mass" value="1.1" /> <!-- [kg] -->
+  <xacro:property name="mass" value="1.1" /> <!-- 1.1[kg] -->
   <xacro:property name="body_length" value="0.18" /> <!-- [m] 0.10 -->
   <xacro:property name="body_width" value="0.12" /> <!-- [m] 0.10 -->
   <xacro:property name="body_height" value="0.10" /> <!-- [m] -->
@@ -32,7 +32,7 @@
 
   <!-- Property Blocks -->
   <xacro:property name="body_inertia">
-    <inertia ixx="0.0347563" ixy="0.0" ixz="0.0" iyy="0.0458929" iyz="0.0" izz="0.0977" /> <!-- [kg.m^2] [kg.m^2] [kg.m^2] [kg.m^2] [kg.m^2] [kg.m^2] -->
+    <inertia ixx="0.0347563" ixy="0.0" ixz="0.0" iyy="0.0458929" iyz="0.0" izz="0.0977" /> <!-- "0.0347563" ixy="0.0" ixz="0.0" iyy="0.0458929" iyz="0.0" izz="0.0977" [kg.m^2] [kg.m^2] [kg.m^2] [kg.m^2] [kg.m^2] [kg.m^2] -->
   </xacro:property>
 
   <!-- inertia of a single rotor, assuming it is a cuboid. Height=3mm, width=15mm -->
@@ -70,7 +70,7 @@
    <xacro:lidar_sensor
     name="lidar"
     parent="base_link"
-    update_rate="10"
+    update_rate="300"
     min_range="0.06"
     max_range="20.0"
     field_of_view_horizontal="${2*M_PI}"

@@ -1,0 +1,32 @@
+digraph G {
+node [shape=box];
+"base_link" [label="base_link"];
+"/imu_link" [label="/imu_link"];
+"/imugt_link" [label="/imugt_link"];
+"/odometry_sensor_link" [label="/odometry_sensor_link"];
+"base_link_inertia" [label="base_link_inertia"];
+"lidar_link" [label="lidar_link"];
+"rotor_0" [label="rotor_0"];
+"rotor_1" [label="rotor_1"];
+"rotor_2" [label="rotor_2"];
+"rotor_3" [label="rotor_3"];
+node [shape=ellipse, color=blue, fontcolor=blue];
+"base_link" -> "/imu_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"/imu_joint" -> "/imu_link"
+"base_link" -> "/imugt_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"/imugt_joint" -> "/imugt_link"
+"base_link" -> "/odometry_sensor_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"/odometry_sensor_joint" -> "/odometry_sensor_link"
+"base_link" -> "base_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"base_joint" -> "base_link_inertia"
+"base_link" -> "lidar_joint" [label="xyz: 0 0 0.06 \nrpy: 0 -0 0"]
+"lidar_joint" -> "lidar_link"
+"base_link" -> "rotor_0_joint" [label="xyz: 0.141 -0.141 0.03 \nrpy: 0 -0 0"]
+"rotor_0_joint" -> "rotor_0"
+"base_link" -> "rotor_1_joint" [label="xyz: -0.141 0.141 0.03 \nrpy: 0 -0 0"]
+"rotor_1_joint" -> "rotor_1"
+"base_link" -> "rotor_2_joint" [label="xyz: 0.141 0.141 0.03 \nrpy: 0 -0 0"]
+"rotor_2_joint" -> "rotor_2"
+"base_link" -> "rotor_3_joint" [label="xyz: -0.141 -0.141 0.03 \nrpy: 0 -0 0"]
+"rotor_3_joint" -> "rotor_3"
+}
