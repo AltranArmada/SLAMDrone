@@ -1,0 +1,3 @@
+<launch>
+	<rosparam command="load" file="$(find Moveit_quad)/config/sensors.yaml" />
+</launch>

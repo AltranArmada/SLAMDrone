@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+<!-- Sendding simple goals -->
+	<remap from="set_position" to="mavros/setpoint_position/local"/>
+  	<node pkg="simple_navigation_goals" type="simple_navigation_goals" 		respawn="false" name="simple_navigation_goals" output="screen">  
+     		<param name="position_x" value="6.0"/>
+     		<param name="position_y" value="2.0"/>
+ 	 </node>
+	
+</launch>
