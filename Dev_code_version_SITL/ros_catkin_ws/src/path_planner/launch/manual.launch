@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<launch>
+ <arg name="simRate" default="nan"/>
+  <!-- Enable simulation clock -->
+  <param name="use_sim_time" type="bool" value="true" />
+  <include file="$(find mavros)/launch/apm_sitl.launch"></include>
+
+  <arg name="enable_logging" default="true"/>
+  <arg name="enable_ground_truth" default="true"/>
+  <arg name="log_file" default="armada"/>
+  <arg name="headless" default="false"/>
+  <arg name="gui" default="true"/>
+  <arg name="world_name" default="$(find ardupilot_sitl_gazebo_plugin)/worlds/empty_world/empty.world"/> 
+  <arg name="name" default="armada"/>
+  <arg name="model" default="$(find ardupilot_sitl_gazebo_plugin)/urdf/armada_base.xacro"/>
+  <arg name="tf_prefix" default="$(optenv ROS_NAMESPACE)"/>
+  <arg name="debug" default="true"/>
+  <arg name="verbose" default="true"/>
+
+  <!-- Initial pose for the drone -->
+  <arg name="x" default="0"/> <!-- [m], positive to the North -->
+  <arg name="y" default="0"/> <!-- [m], negative to the East -->
+  <arg name="z" default="0.08"/> <!-- [m], positive Up -->
+  <arg name="roll" default="0"/> <!-- [rad] -->
+  <arg name="pitch" default="0"/> <!-- [rad] -->
+  <arg name="yaw" default="0"/> <!-- [rad], negative clockwise -->
+
+  <!-- send the robot XML to param server -->
+  <param name="robot_description" command="
+    $(find xacro)/xacro.py '$(arg model)'
+    enable_logging:=$(arg enable_logging)
+    enable_ground_truth:=$(arg enable_ground_truth)
+    log_file:=$(arg log_file)"
+  />
+  <param name="tf_prefix" type="string" value="$(arg tf_prefix)" /> 
+
+  <node name="spawn_armada" pkg="gazebo_ros" type="spawn_model"
+   args="-param robot_description
+         -urdf
+         -x $(arg x)
+         -y $(arg y)
+         -z $(arg z)
+         -R $(arg roll)
+         -P $(arg pitch)
+         -Y $(arg yaw)
+         -model $(arg name)"
+   respawn="false" output="screen"> 
+  </node> 
+	
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="paused" value="true"/>   <!-- value unrelevant due to Arducopter plugin steps --> 
+    <arg name="headless" value="$(arg headless)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="world_name" value="$(arg world_name)"/>
+  </include> 
+
+   <node pkg="tf" type="static_transform_publisher" name="base_link_to_lidar_link" args="0.0 0.0 0.06 0 0 0.0 base_link lidar_link 50"> 
+ </node> 
+
+	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+			<param name="publish_frequency" value="50"/>
+			<param name="use_gui" value="false"/>
+			<param name="use_tf_static" value="false"/>
+	</node>
+ <!-- Turn on hybrid_astar node -->
+ <node name="hybrid_astar" pkg="hybrid_astar" type="hybrid_astar" /> 
+ <node name="tf_broadcaster" pkg="hybrid_astar" type="tf_broadcaster" />
+ <node name="map_server" pkg="map_server" type="map_server" args="$(find ardupilot_sitl_gazebo_plugin)/maps/mymap.yaml" />
+ <!--<node name="map_server" pkg="map_server" type="map_server" args="$(find hybrid_astar)/maps/map.yaml" />-->
+ <node name="rviz" pkg="rviz" type="rviz" args="-d $(env HOME)/.rviz/path_planner.rviz" />
+</launch>

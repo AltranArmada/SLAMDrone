@@ -1,24 +1,24 @@
 DWAPlannerROS:
 
 # Robot Configuration Parameters
-  max_vel_x: 0.75 #2.25
-  min_vel_x: 0.0 #-2.25 
+  max_vel_x: 0.55 #2.25 #0.75
+  min_vel_x: 0.0 #-2.25 #0.0
 
-  max_vel_y: 0.75
-  min_vel_y: 0.0
+  max_vel_y: 0.1	#0.75
+  min_vel_y: -0.1	#0.0
 
   # The velocity when robot is moving in a straight line
   max_trans_vel:  1.0 #1.0 #0.18
-  min_trans_vel:  0.5 #0.6  #0.05
+  min_trans_vel:  0.03 #0.6  #0.05
   #trans_stopped_vel: 0.55 
 
-  max_rot_vel: 20 #3.5 #3.0 #1.8
-  min_rot_vel: 5 #2.1 #0.7
+  max_rot_vel: 0.03 #3.5 #3.0 #1.8 #20
+  min_rot_vel: 0.01 #2.1 #0.7
   #rot_stopped_vel: 1.9
 
-  acc_lim_x: 0.5 #2.0 #robot accelerates very slowly because it weighs so much
-  acc_lim_theta: 10.2 #2.0
-  acc_lim_y: 0.5
+  acc_lim_x: 2.5 #2.0 #robot accelerates very slowly because it weighs so much
+  acc_lim_theta: 3.2 #2.0
+  acc_lim_y: 2.5
 
 # Goal Tolerance Parameters
   yaw_goal_tolerance: 0.05  # 0.2
@@ -35,7 +35,7 @@ DWAPlannerROS:
 
 # Trajectory Scoring Parameters
   path_distance_bias: 32.0      # 32.0   - weighting for how much it should stick to the global path plan
-  goal_distance_bias: 20.0      # 24.0   - wighting for how much it should attempt to reach its goal
+  goal_distance_bias: 30.0      # 24.0   - wighting for how much it should attempt to reach its goal
   occdist_scale: 0.02            # 0.005   - weighting for how much the controller should avoid obstacles
   
 # Oscillation Prevention Parameters

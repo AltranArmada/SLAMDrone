@@ -7,7 +7,12 @@ Panels:
         - /Global Options1
         - /LaserScan1
         - /DepthCloud1/Auto Size1
+        - /Local Costmap1
+        - /Global Plan1
+        - /Local Plan1
+        - /Planner Plan1
         - /Camera1
+        - /Path1
       Splitter Ratio: 0.5
     Tree Height: 702
   - Class: rviz/Selection
@@ -55,6 +60,18 @@ Visualization Manager:
       Collision Enabled: false
       Enabled: true
       Links:
+        /imu_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        /imugt_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        /odometry_sensor_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         All Links Enabled: true
         Expand Joint Details: false
         Expand Link Details: false
@@ -69,18 +86,6 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        erlecopter/ground_truth/odometry_sensor_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        erlecopter/imu_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        erlecopter/imugt_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
         lidar_link:
           Alpha: 1
           Show Axes: false
@@ -192,11 +197,11 @@ Visualization Manager:
     - Arrow Length: 0.3
       Class: rviz/PoseArray
       Color: 255; 25; 0
-      Enabled: false
+      Enabled: true
       Name: PoseArray
       Topic: /particlecloud
       Unreliable: false
-      Value: false
+      Value: true
     - Alpha: 1
       Class: rviz/Polygon
       Color: 255; 0; 0
@@ -243,7 +248,7 @@ Visualization Manager:
       Radius: 0.03
       Shaft Diameter: 0.1
       Shaft Length: 0.1
-      Topic: /move_base/TrajectoryPlannerROS/global_plan
+      Topic: /move_base/NavfnROS/plan
       Unreliable: false
       Value: true
     - Alpha: 1
@@ -266,7 +271,7 @@ Visualization Manager:
       Radius: 0.03
       Shaft Diameter: 0.1
       Shaft Length: 0.1
-      Topic: /move_base/TrajectoryPlannerROS/local_plan
+      Topic: /move_base/DWAPlannerROS/local_plan
       Unreliable: false
       Value: true
     - Alpha: 1
@@ -326,6 +331,7 @@ Visualization Manager:
         Local Costmap: true
         Local Plan: true
         Map: true
+        Path: true
         Planner Plan: true
         PoseArray: true
         Robot Footprint: true
@@ -333,6 +339,29 @@ Visualization Manager:
         Static Map: true
         Value: false
       Zoom Factor: 1
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz/Path
+      Color: 0; 0; 255
+      Enabled: true
+      Head Diameter: 0.3
+      Head Length: 0.2
+      Length: 0.3
+      Line Style: Lines
+      Line Width: 0.03
+      Name: Path
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Pose Color: 255; 85; 255
+      Pose Style: None
+      Radius: 0.03
+      Shaft Diameter: 0.1
+      Shaft Length: 0.1
+      Topic: /move_base/TebLocalPlannerROS/local_plan
+      Unreliable: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -357,7 +386,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/ThirdPersonFollower
-      Distance: 30.5411
+      Distance: 6.77051
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
@@ -392,5 +421,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1215
-  X: 685
-  Y: 30
+  X: 635
+  Y: 14

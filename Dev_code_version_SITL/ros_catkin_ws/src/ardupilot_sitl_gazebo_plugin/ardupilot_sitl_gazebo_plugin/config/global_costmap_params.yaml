@@ -13,8 +13,13 @@
 
 global_costmap:
   global_frame: map #map
-  robot_base_frame: base_link
-  update_frequency: 0.3
+  robot_base_frame: /base_link
+  update_frequency: 0.3  
   publish_frequency: 0.3
   static_map: true
   resolution: 0.01
+  transform_tolerance: 1.0 #0.5
+
+plugins:
+  - {name: static,                  type: "costmap_2d::StaticLayer"}
+  - {name: inflation,               type: "costmap_2d::InflationLayer"}

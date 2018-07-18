@@ -21,8 +21,8 @@
   <arg name="verbose" default="true"/>
 
   <!-- Initial pose for the drone -->
-  <arg name="x" default="0.0"/> <!-- [m], positive to the North -->
-  <arg name="y" default="0.0"/> <!-- [m], negative to the East -->
+  <arg name="x" default="0"/> <!-- [m], positive to the North -->
+  <arg name="y" default="0"/> <!-- [m], negative to the East -->
   <arg name="z" default="0.08"/> <!-- [m], positive Up -->
   <arg name="roll" default="0"/> <!-- [rad] -->
   <arg name="pitch" default="0"/> <!-- [rad] -->
@@ -67,21 +67,46 @@
     <arg name="world_name" value="$(arg world_name)"/>
   </include> 
 
-  <!-- <node pkg="tf" type="static_transform_publisher" name="odom_to_base_link" args="0.0 0.0 0.0 0 0 0.0 odom base_link 10"> 
-	<param name="publish_frequency" value="10000"/>
- </node> --> 
+   <node pkg="tf" type="static_transform_publisher" name="base_link_to_lidar_link" args="0.0 0.0 0.06 0 0 0.0 base_link lidar_link 50"> 
+ </node> 
 
 	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
 	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
-			<param name="publish_frequency" value="10000"/>
+			<param name="publish_frequency" value="50"/>
 			<param name="use_gui" value="false"/>
 			<param name="use_tf_static" value="false"/>
 	</node>
+
+<!-- Laser scan assembler to transform laser scans into point cloud messages 
+
+  <node type="laser_scan_assembler" pkg="laser_assembler" name="my_assembler">
+    <param name="max_scans" type="int" value="5" />
+    <param name="fixed_frame" type="string" value="map" />
+  </node> -->
+
+<!-- Periodic snapshotter node to publish the point cloud messages into a topic 
+
+<node type="periodic_snapshotter" pkg="laser_assembler" name="periodic_snapshotter"/>
+  
+<node name="waypoint_node" pkg="quad_control" type="waypoint_publisher_node" output="screen"/>
+<node name="position_controller_node" pkg="quad_control" type="position_controller_node" output="screen"> 
+      <rosparam command="load" file="$(find quad_gazebo)/resource/kit_c.yaml" /> 
+      <rosparam command="load" file="$(find quad_control)/resource/position_controller.yaml" /> 
+    </node> 
+    <node name="attitude_controller_node" pkg="quad_control" type="attitude_controller_node" output="screen"> 
+      <rosparam command="load" file="$(find quad_gazebo)/resource/kit_c.yaml" /> 
+      <rosparam command="load" file="$(find quad_control)/resource/attitude_controller.yaml" />  
+    </node> -->
+
+
 <!-- Localization  -->
 
  <!-- Map server -->
   <arg name="map_file" default="$(find ardupilot_sitl_gazebo_plugin)/maps/mymap.yaml"/>
-  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" /> 
+
+ <!-- Pose initialize node -->
+  <node pkg="armada" type="pose_init" respawn="false" name="pose_init"   output="screen"/>
 
 
   <!-- Localization -->
@@ -89,72 +114,80 @@
     <param name="odom_frame_id" value="world"/>
     <param name="base_frame_id" value="base_link" />
     <param name="global_frame_id" value="map" />
-    <param name="odom_model_type" value="omni"/> <!--value="diff-corrected"-->
+    <param name="odom_model_type" value="omni"/>  <!--value="diff-corrected"-->
     <param name="odom_alpha5" value="0.1"/>
-    <param name="transform_tolerance" value="0.5" /> <!--0.2-->
-    <param name="gui_publish_rate" value="1.0"/> <!--10.0-->
+    <param name="transform_tolerance" value="0.9" />  <!--0.05-->
+    <param name="gui_publish_rate" value="1.0"/>  <!--10.0-->
     <param name="laser_max_beams" value="30"/>
-    <param name="min_particles" value="500"/>
+    <param name="min_particles" value="100"/>
     <param name="max_particles" value="5000"/>
     <param name="kld_err" value="0.05"/>
     <param name="kld_z" value="0.99"/>
     <param name="odom_alpha1" value="0.2"/>
-    <param name="odom_alpha2" value="0.2"/>
+    <param name="odom_alpha2" value="0.2"/> 
     <!-- translation std dev, m -->
     <param name="odom_alpha3" value="0.8"/>
     <param name="odom_alpha4" value="0.2"/>
-    <param name="laser_z_hit" value="0.5"/>
-    <param name="laser_z_short" value="0.05"/>
+    <param name="laser_z_hit" value="0.95"/>  <!--0.5-->
+    <param name="laser_z_short" value="0.05"/> <!--0.05-->
     <param name="laser_z_max" value="0.05"/>
-    <param name="laser_z_rand" value="0.5"/>
+    <param name="laser_z_rand" value="0.5"/>  <!--0.5-->
     <param name="laser_sigma_hit" value="0.2"/>
     <param name="laser_lambda_short" value="0.1"/>
-    <param name="laser_lambda_short" value="0.1"/>
-    <param name="laser_model_type" value="likelihood_field"/>
-   <!-- <param name="laser_model_type" value="beam"/> -->
-  <param name="laser_likelihood_max_dist" value="2.0"/>
-  <param name="update_min_d" value="0.2"/>
-  <param name="update_min_a" value="0.5"/>
-  <param name="resample_interval" value="1"/>
-  <param name="recovery_alpha_slow" value="0.0"/>
-  <param name="recovery_alpha_fast" value="0.0"/>
-    <param name="update_min_d" value="0.5"/>
-    <param name="update_min_a" value="1.0"/>
+    <param name="laser_model_type" value="likelihood_field"/> 
+    <param name="laser_min_range" value="0.5"/> 
+    
+  <!--<param name="laser_model_type" value="beam"/>  -->
+    <param name="laser_likelihood_max_dist" value="20.0"/> 
+  <!--  <param name="update_min_d" value="-0.2"/>-->
+    <param name="update_min_a" value="-0.5"/>
+    <param name="resample_interval" value="2"/>  <!--100-->
+    <param name="recovery_alpha_slow" value="0.0"/>
+    <param name="recovery_alpha_fast" value="0.0"/>
+    <param name="save_pose_rate" value="0.5"/>
+
+    <param name="tf_broadcast" value="true"/>
     <param name="use_map_topic" value="false"/>
-</node>
+</node> 
 
 <!-- Move base -->
- <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
 
     <rosparam file="$(find ardupilot_sitl_gazebo_plugin)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
     <rosparam file="$(find ardupilot_sitl_gazebo_plugin)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find ardupilot_sitl_gazebo_plugin)/config/local_costmap_params.yaml" command="load" />
     <rosparam file="$(find ardupilot_sitl_gazebo_plugin)/config/global_costmap_params.yaml" command="load" />
     <rosparam file="$(find ardupilot_sitl_gazebo_plugin)/config/base_local_planner_params.yaml" command="load" /> 
-     <rosparam file="$(find ardupilot_sitl_gazebo_plugin)/config/move_base_params.yaml" command="load" />
+     <rosparam file="$(find ardupilot_sitl_gazebo_plugin)/config/move_base_params.yaml" command="load" /> 
     <rosparam file="$(find ardupilot_sitl_gazebo_plugin)/config/dwa_local_planner_params.yaml" command="load" /> 
-     <rosparam file="$(find ardupilot_sitl_gazebo_plugin)/config/global_planner_params.yaml" command="load" />
+      <rosparam file="$(find ardupilot_sitl_gazebo_plugin)/config/global_planner_params.yaml" command="load" />
     <rosparam file="$(find ardupilot_sitl_gazebo_plugin)/config/navfn_global_planner_params.yaml" command="load" /> 
-
- <!--   <remap from="cmd_vel" to="erlecopter/command/motor_speed"/> 
-    <param name="global_costmap/global_frame" value="map"/>
-    <param name="global_costmap/robot_base_frame" value="base_link"/>
-     <param name="local_costmap/global_frame" value="odom"/>  
-    <param name="local_costmap/robot_base_frame" value="base_link"/>
-    <param name="DWAPlannerROS/global_frame_id" value="odom"/>-->
+  <!--  <rosparam file="$(find ardupilot_sitl_gazebo_plugin)/config/teb_local_planner_params.yaml" command="load" /> -->
+    <rosparam file="$(find ardupilot_sitl_gazebo_plugin)/config/costmap_converter_params.yaml" command="load" /> 
+   <remap from="cmd_vel" to="cmd_vel_bkp"/> 
 
     <remap from="cmd_vel" to="cmd_vel_bkp"/>
-    <remap from="odom" to="/ground_truth/odometry"/>
-    <remap from="scan" to="scan"/>
+    <remap from="odom" to="/odometry"/>
 </node> 
 
 <!-- Move base transform -->
   <node pkg="move_base" type="move_base_transform" respawn="false" name="move_base_trans" output="screen">
   <remap from="cmd_vel_trans" to="mavros/setpoint_velocity/cmd_vel"/>
+ <!-- <remap from="cmd_att_trans" to="/mavros/setpoint_attitude/cmd_vel"/>-->
 </node> 
 
-<!-- Sendding simple goals 
-  <node pkg="simple_navigation_goals" type="simple_navigation_goals" respawn="false" name="simple_navigation_goals" output="screen"/>  -->
+<!-- Sendding simple goals -->
+	<!-- <remap from="set_position" to="mavros/setpoint_position/local"/>
+  <node pkg="simple_navigation_goals" type="simple_navigation_goals" respawn="false" name="simple_navigation_goals" output="screen">  
+     <param name="position_x" value="6.0"/>
+     <param name="position_y" value="2.0"/>
+     <param name="position_z" value="0.0"/>
+  </node> -->
+
+
+ <!-- Turn on hybrid_astar node 
+ <node name="hybrid_astar" pkg="hybrid_astar" type="hybrid_astar" /> 
+ <node name="tf_broadcaster" pkg="hybrid_astar" type="tf_broadcaster" /> -->
 
 
  <!-- Visualisation RVIZ -->
