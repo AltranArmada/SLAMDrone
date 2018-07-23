@@ -37,48 +37,6 @@
 [submodule "erle_gazebo_models"]
 	path = erle_gazebo_models
 	url = https://github.com/erlerobot/erle_gazebo_models
-[submodule "armada2/Dev_code_version_SITL/ardupilot"]
-	path = armada2/Dev_code_version_SITL/ardupilot
-	url = https://github.com/AltranArmada/ardupilot.git
-[submodule "armada2/Dev_code_version_SITL/ros_catkin_ws/src/ROS_quadrotor_simulator"]
-	path = armada2/Dev_code_version_SITL/ros_catkin_ws/src/ROS_quadrotor_simulator
-	url = https://github.com/AltranArmada/ROS_quadrotor_simulator.git
-[submodule "armada2/Dev_code_version_SITL/ros_catkin_ws/src/catkin_simple"]
-	path = armada2/Dev_code_version_SITL/ros_catkin_ws/src/catkin_simple
-	url = https://github.com/AltranArmada/catkin_simple.git
-[submodule "armada2/Dev_code_version_SITL/ros_catkin_ws/src/gazebo_cpp_examples"]
-	path = armada2/Dev_code_version_SITL/ros_catkin_ws/src/gazebo_cpp_examples
-	url = https://github.com/AltranArmada/gazebo_cpp_examples.git
-[submodule "armada2/Dev_code_version_SITL/ros_catkin_ws/src/gazebo_python_examples"]
-	path = armada2/Dev_code_version_SITL/ros_catkin_ws/src/gazebo_python_examples
-	url = https://github.com/AltranArmada/gazebo_python_examples.git
-[submodule "armada2/Dev_code_version_SITL/ros_catkin_ws/src/gazebo_ros_pkgs"]
-	path = armada2/Dev_code_version_SITL/ros_catkin_ws/src/gazebo_ros_pkgs
-	url = https://github.com/AltranArmada/gazebo_ros_pkgs.git
-[submodule "armada2/Dev_code_version_SITL/ros_catkin_ws/src/glog_catkin"]
-	path = armada2/Dev_code_version_SITL/ros_catkin_ws/src/glog_catkin
-	url = https://github.com/AltranArmada/glog_catkin.git
-[submodule "armada2/Dev_code_version_SITL/ros_catkin_ws/src/hector_gazebo"]
-	path = armada2/Dev_code_version_SITL/ros_catkin_ws/src/hector_gazebo
-	url = https://github.com/AltranArmada/hector_gazebo.git
-[submodule "armada2/Dev_code_version_SITL/ros_catkin_ws/src/mav_comm"]
-	path = armada2/Dev_code_version_SITL/ros_catkin_ws/src/mav_comm
-	url = https://github.com/AltranArmada/mav_comm.git
-[submodule "armada2/Dev_code_version_SITL/ros_catkin_ws/src/mavros"]
-	path = armada2/Dev_code_version_SITL/ros_catkin_ws/src/mavros
-	url = https://github.com/AltranArmada/mavros.git
-[submodule "armada2/Dev_code_version_SITL/ros_catkin_ws/src/rotors_simulator"]
-	path = armada2/Dev_code_version_SITL/ros_catkin_ws/src/rotors_simulator
-	url = https://github.com/AltranArmada/rotors_simulator.git
-[submodule "armada2/Dev_code_version_SITL/ros_catkin_ws/src/navigation"]
-	path = armada2/Dev_code_version_SITL/ros_catkin_ws/src/navigation
-	url = https://github.com/AltranArmada/navigation.git
-[submodule "armada2/Dev_code_version_SITL/ros_catkin_ws/src/gflags_catkin"]
-	path = armada2/Dev_code_version_SITL/ros_catkin_ws/src/gflags_catkin
-	url = https://github.com/AltranArmada/gflags_catkin.git
-[submodule "armada2/Dev_code_version_SITL/ros_catkin_ws/src/ardupilot_sitl_gazebo_plugin"]
-	path = armada2/Dev_code_version_SITL/ros_catkin_ws/src/ardupilot_sitl_gazebo_plugin
-	url = https://github.com/AltranArmada/ardupilot_sitl_gazebo_plugin.git
 [submodule "armada3/Dev_code_version_SITL/ardupilot"]
 	path = armada3/Dev_code_version_SITL/ardupilot
 	url = https://github.com/AltranArmada/ardupilot.git
