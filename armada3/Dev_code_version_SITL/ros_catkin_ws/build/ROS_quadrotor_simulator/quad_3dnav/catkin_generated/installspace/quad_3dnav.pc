@@ -1,0 +1,8 @@
+prefix=/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/install
+
+Name: quad_3dnav
+Description: Description of quad_3dnav
+Version: 0.3.0
+Cflags: 
+Libs: -L/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/install/lib 
+Requires: 

@@ -1,0 +1,8 @@
+prefix=/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/devel
+
+Name: quad_2dnav
+Description: Description of quad_2dnav
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/devel/lib 
+Requires: 

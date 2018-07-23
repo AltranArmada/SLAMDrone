@@ -1,0 +1,8 @@
+prefix=/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/install
+
+Name: moveit_simple_controller_manager
+Description: Description of moveit_simple_controller_manager
+Version: 0.5.2
+Cflags: 
+Libs: -L/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/install/lib 
+Requires: moveit_core

@@ -1,0 +1,8 @@
+prefix=/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/install
+
+Name: recorder_camera_plugin
+Description: Description of recorder_camera_plugin
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/install/lib 
+Requires: roscpp gazebo_ros cv_bridge image_transport sensor_msgs

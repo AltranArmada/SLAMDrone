@@ -1,0 +1,8 @@
+prefix=/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/install
+
+Name: fake_localization
+Description: Description of fake_localization
+Version: 1.12.15
+Cflags: 
+Libs: -L/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/install/lib 
+Requires: geometry_msgs nav_msgs roscpp rospy

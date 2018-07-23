@@ -1,0 +1,8 @@
+prefix=/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/install
+
+Name: gflags_catkin
+Description: Description of gflags_catkin
+Version: 2.1.2
+Cflags: -I/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/install/include
+Libs: -L/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/install/lib -lgflags
+Requires: 

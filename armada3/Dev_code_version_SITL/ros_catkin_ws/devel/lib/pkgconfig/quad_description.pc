@@ -1,0 +1,8 @@
+prefix=/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/devel
+
+Name: quad_description
+Description: Description of quad_description
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/devel/lib 
+Requires: 

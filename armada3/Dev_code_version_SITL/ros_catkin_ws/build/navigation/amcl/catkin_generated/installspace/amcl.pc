@@ -1,0 +1,8 @@
+prefix=/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/install
+
+Name: amcl
+Description: Description of amcl
+Version: 1.12.15
+Cflags: -I/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/install/include
+Libs: -L/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/install/lib -lamcl_sensors -lamcl_map -lamcl_pf
+Requires: nav_msgs std_srvs

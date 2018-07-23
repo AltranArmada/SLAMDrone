@@ -1,0 +1,8 @@
+prefix=/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/devel
+
+Name: erle_rover_explorer
+Description: Description of erle_rover_explorer
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/devel/lib 
+Requires: rospy mavros mav_msgs

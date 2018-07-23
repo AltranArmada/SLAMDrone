@@ -1,0 +1,8 @@
+prefix=/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/devel
+
+Name: nav_core
+Description: Description of nav_core
+Version: 1.12.15
+Cflags: -I/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/src/navigation/nav_core/include
+Libs: -L/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/devel/lib 
+Requires: std_msgs geometry_msgs tf costmap_2d

@@ -1,0 +1,8 @@
+prefix=/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/devel
+
+Name: ros_erle_rover_navigation
+Description: Description of ros_erle_rover_navigation
+Version: 0.0.1
+Cflags: 
+Libs: -L/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/devel/lib 
+Requires: 

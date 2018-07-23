@@ -1,0 +1,1 @@
+cmd='cd;../glog_src/;&&;eval;/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/src/get-newest-config-guess.sh;&&;./configure;--with-pic;--with-gflags=/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/devel;--prefix=/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/devel'

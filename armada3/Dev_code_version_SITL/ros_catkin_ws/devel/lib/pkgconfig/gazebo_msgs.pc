@@ -1,0 +1,8 @@
+prefix=/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/devel
+
+Name: gazebo_msgs
+Description: Description of gazebo_msgs
+Version: 2.4.15
+Cflags: -I/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/devel/include
+Libs: -L/home/user/armada3/Dev_code_version_SITL/ros_catkin_ws/devel/lib 
+Requires: message_runtime std_msgs trajectory_msgs geometry_msgs sensor_msgs std_srvs
